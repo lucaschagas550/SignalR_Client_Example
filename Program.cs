@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
+using System.Diagnostics;
 
-var uri = new Uri("https://localhost:7218/connection");
+var uri = new Uri("http://localhost:5090/connection");
 var userId = "";
 
-Console.Write("Digite seu nome: ");
-var user = Console.ReadLine();
+//Console.Write("Digite seu nome: ");
+//var user = Console.ReadLine();
 
-await using var connection = new HubConnectionBuilder()
+var connection = new HubConnectionBuilder()
     .WithUrl(uri.AbsoluteUri)
     .WithAutomaticReconnect()
     .Build();
@@ -16,9 +17,15 @@ connection.On<string, string>("ReceiveMessage", (sender, message) =>
     Console.WriteLine($"{sender} => {message}");
 });
 
+connection.On<Person>("ReceiveObject", (message) =>
+{
+    Console.WriteLine($"{message.Name}, {message.Age}, {message.Date} ");
+    Debug.WriteLine($"{message.Name}, {message.Age}, {message.Date} ");
+});
+
 connection.On<string>("Connected", (Id) =>
 {
-    Console.WriteLine($"Seu UserId => {Id}");
+    Console.WriteLine($"UserId => {Id}");
     userId = Id;
 });
 
