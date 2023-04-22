@@ -14,13 +14,16 @@ var connection = new HubConnectionBuilder()
 
 connection.On<string, string>("ReceiveMessage", (sender, message) =>
 {
-    Console.WriteLine($"{sender} => {message}");
+    Console.WriteLine($"{sender} => {message} \n");
 });
 
 connection.On<Person>("ReceiveObject", (message) =>
 {
-    Console.WriteLine($"{message.Name}, {message.Age}, {message.Date} ");
-    Debug.WriteLine($"{message.Name}, {message.Age}, {message.Date} ");
+    Console.WriteLine($"Date: {DateTime.Now.ToLocalTime().ToString("dd/MM/yyyy hh:mm:ss.fff")}");
+    Debug.WriteLine($"Date: {DateTime.Now.ToLocalTime().ToString("dd/MM/yyyy hh:mm:ss.fff")}");
+
+    Console.WriteLine($"{message.Name}, {message.Age} \n");
+    Debug.WriteLine($"{message.Name}, {message.Age}");
 });
 
 connection.On<string>("Connected", (Id) =>
