@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR.Client;
 using System.Diagnostics;
 
-var uri = new Uri("http://localhost:5090/connection");
+var uri = new Uri("https://localhost:7141/connection");
 var userId = "";
 
 //Console.Write("Digite seu nome: ");
